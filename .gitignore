@@ -4,7 +4,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 WallhavenScraper/wallpapers
-
+Wallpapers/WallpapersToSeed
+Wallpapers/wwwroot/wallpapers
 # User-specific files
 *.rsuser
 *.suo
