@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Wallpapers.Models;
 
-namespace Wallpapes.Models
+namespace Wallpapers.Models
 {
     public class Tag
     {

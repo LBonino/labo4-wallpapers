@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Wallpapers.Models;
-using Wallpapes.Models;
 
 namespace Wallpapers.Data
 {

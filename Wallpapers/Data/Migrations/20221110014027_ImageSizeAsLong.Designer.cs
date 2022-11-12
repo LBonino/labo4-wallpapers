@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wallpapers.Data;
 
 namespace Wallpapers.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221110014027_ImageSizeAsLong")]
+    partial class ImageSizeAsLong
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,9 +261,6 @@ namespace Wallpapers.Data.Migrations
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
                     b.Property<long>("SizeInBytes")
                         .HasColumnType("bigint");
 
@@ -269,9 +268,6 @@ namespace Wallpapers.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ImageId");
-
-                    b.HasIndex("PostId")
-                        .IsUnique();
 
                     b.ToTable("Images");
                 });
@@ -283,6 +279,9 @@ namespace Wallpapers.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("SubmissionDate")
                         .HasColumnType("datetime2");
 
@@ -293,6 +292,9 @@ namespace Wallpapers.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("ImageId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -408,17 +410,14 @@ namespace Wallpapers.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Wallpapers.Models.Image", b =>
-                {
-                    b.HasOne("Wallpapers.Models.Post", "Post")
-                        .WithOne("Image")
-                        .HasForeignKey("Wallpapers.Models.Image", "PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Wallpapers.Models.Post", b =>
                 {
+                    b.HasOne("Wallpapers.Models.Image", "Image")
+                        .WithOne("Post")
+                        .HasForeignKey("Wallpapers.Models.Post", "ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Wallpapers.Models.ApplicationUser", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId");

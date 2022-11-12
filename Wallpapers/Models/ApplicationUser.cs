@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using Wallpapes.Models;
+using Wallpapers.Models;
 
 namespace Wallpapers.Models
 {

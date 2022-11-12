@@ -1,4 +1,4 @@
-using Wallpapes.Models;
+using Wallpapers.Models;
 
 namespace Wallpapers.Models
 {
