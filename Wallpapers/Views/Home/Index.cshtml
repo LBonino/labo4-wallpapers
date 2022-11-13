@@ -1,8 +1,92 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model Wallpapers.ViewModels.HomeViewModel
+
+<html>
+    <head>
+        <title>
+            wallclone
+        </title>
+        <link rel="stylesheet" href="~/css/landing.css"/>
+    </head>
+    <body>
+        <div id="body-container">
+            <header>
+                <a asp-controller="Home" asp-action="Index">
+                    <h1>wallclone</h1>
+                </a>
+                <small>El <a class="hover-underline" target="_blank" href="https://wallhaven.cc">wallhaven.cc</a> de la salada</small>
+            </header>
+
+            <main>
+                <div id="popular-tags">
+                    @foreach (var tag in Model.Tags) 
+                    {
+                        <a class="tag" href="tag/@tag.TagId">
+                            #@tag.Name
+                        </a>
+                    }
+
+                    <a href="tags">Más tags...</a>
+                </div>
+
+                <div class="popular-row">
+                @{
+                    var randomPostsToDisplay = Model.RandomPostsToDisplay;
+
+                    for (int i = 0; i < 4; i++) 
+                        {
+                        <a href="w/@randomPostsToDisplay[i].PostId">
+                            <img class="feat-4" src="~/wallpapers/thumbnail/@randomPostsToDisplay[i].Image.Filename" />
+                        </a>
+                        }
+                }
+                </div>
+
+                <div id="welcome-row">
+                    <p id="welcome-title">¿Nuevo aquí?</p>
+                    <p>
+                        <a href="register">¡Crea una nueva cuenta!</a>
+                        - o -
+                        <a href="login">Inicia sesión</a>
+                    </p>
+                </div>
+
+                <div class="popular-row">
+
+                    @for (int i = 4; i < 9; i++) 
+                    {
+                        <a href="w/@randomPostsToDisplay[i].PostId">
+                            <img class="feat-5" src="~/wallpapers/thumbnail/@randomPostsToDisplay[i].Image.Filename" />
+                        </a>
+                    }
+                </div>
+
+                <div class="popular-row">
+                @for (int i = 9; i < 15; i++)
+                {
+                    <a href="w/@randomPostsToDisplay[i].PostId">
+                        <img class="feat-6" src="~/wallpapers/thumbnail/@randomPostsToDisplay[i].Image.Filename" />
+                    </a>
+                }
+                </div>
+
+                <a href="wallpapers" class="a-listado">> Listado completo de wallpapers <</a>
+
+                <div class="wallclone-stats">
+                    <h3>Estadísticas de wallclone</h3>
+                    <p>¡wallclone es el hogar de <strong>@Model.Posts.Count()</strong> wallpapers de dudosa procedencia!</p>
+                    <p>¡Tenemos <strong>@Model.Users.Count()</strong> usuarios asombrosos! (la mayoría falsos)</p>
+                    <p>¿No estás seguro de qué buscar? ¡Estamos seguros de que al menos uno de nuestros <strong>@Model.Tags.Count()</strong> <a href="tags">tags</a> creados por los usuarios te ayudarán a encontrar algo!</p>
+                </div>
+            </main>
+
+            <footer>
+                <p>Todas las imágenes son propiedad de sus dueños originales. Sitio y código © <span class="strike">wallhaven.cc</span> wallclone</p>
+            </footer>
+        </div>
+    </body>
+</html>

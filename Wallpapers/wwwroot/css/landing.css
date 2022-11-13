@@ -1,0 +1,190 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap');
+
+html {
+    height: 100vh;
+}
+
+body {
+    height: 99%;
+    background: url("../assets/blue-gradients.020-wh.jpg");
+    background-attachment: fixed;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: white;
+    text-shadow: 1px 1px 3px black
+}
+
+#body-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 30px;
+}
+
+header {
+    color: ghostwhite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    text-shadow: 2px 2px 2px black, -2px -2px 2px black;
+    font-weight: 600;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    filter: brightness(120%);
+}
+
+h1 {
+    font-size: 4rem;
+    margin: 0;
+    
+}
+
+header small {
+    font-size: 1rem;
+    margin-top: 1px;
+}
+
+.hover-underline:hover {
+    text-decoration: underline;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#popular-tags {
+    width: 70vw;
+    display: flex;
+    justify-content: center;
+    margin: 1.7rem 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    font-size: 21px;
+}
+
+#popular-tags a {
+    margin: auto 10px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.tag {
+    color: #9f9 !important;
+}
+
+.popular-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.feat-4 {
+    width: 23vw;
+    height: 13vw;
+    object-fit: cover;
+    border-radius: 2%;
+}
+
+.feat-5 {
+    width: 18.2vw;
+    height: 12.1vw;
+    object-fit: cover;
+    border-radius: 2%;
+}
+
+.feat-6 {
+    width: 15vw;
+    height: 10vw;
+    object-fit: cover;
+    border-radius: 2%;
+}
+
+.popular-row a:hover {
+    filter: brightness(113%);
+    transition: .29s;
+}
+
+.popular-row a {
+    filter: brightness(92%);
+}
+
+.popular-row img {
+    box-shadow: 2px 2px 5px rgb(0 0 0 / 50%);
+}
+
+#welcome-row {
+    background: linear-gradient(to right,rgba(0,0,0,0) 0,rgba(0,0,0,.2) 10%,rgba(0,0,0,.2) 90%,rgba(0,0,0,0) 100%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: none;
+    margin-top: 1rem;
+}
+
+#welcome-row p {
+    padding: 0 10px;
+}
+
+#welcome-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+#welcome-row a {
+    color: #0cd;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
+footer {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 4rem;
+    padding-bottom: 1rem;
+}
+
+footer p {
+    margin: 0;
+    border: solid 1px rgba(0, 0, 0, 0.3);
+    padding: 2px 8px;
+
+}
+
+.wallclone-stats {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.6rem 1rem;
+    font-weight: 300;
+    margin-top: 3rem;
+}
+
+.wallclone-stats h3 {
+    font-weight: 600;
+    padding-bottom: 6px;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.3);
+}
+
+.wallclone-stats a {
+    color: #0cd;
+}
+
+.a-listado {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    font-size: 2rem;
+    margin-top: 1.6rem;
+}
