@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wallpapers.Models;
+using Wallpapers.Controllers;
 
 namespace Wallpapers
 {
@@ -75,8 +76,18 @@ namespace Wallpapers
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "tag",
+                    pattern: "tag/{id}",
+                    defaults: new {controller = "Tag", action = "Index" }
+                );
+
                 endpoints.MapRazorPages();
+
+                
             });
         }
     }

@@ -5,6 +5,7 @@ using System.Linq;
 using Wallpapers.Data;
 using Microsoft.Extensions.Caching.Memory;
 using Wallpapers.Models;
+using System.Collections.Generic;
 
 namespace Wallpapers.ViewModels
 {
@@ -19,19 +20,29 @@ namespace Wallpapers.ViewModels
             _userManager = userManager;
         }
 
-        public DbSet<Post> Posts
+        public List<Post> Posts
         {
             get
             {
-                return _context.Posts;
+                return _context.Posts.ToList();
             }
         }
 
-        public DbSet<Tag> Tags
+        public List<Post> PostsWithImages
         {
             get
             {
-                return _context.Tags;
+                return _context.Posts
+                    .Include(p => p.Image)
+                    .ToList();
+            }
+        }
+
+        public List<Tag> Tags
+        {
+            get
+            {
+                return _context.Tags.ToList();
             }
         }
 

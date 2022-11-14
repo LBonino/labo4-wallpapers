@@ -31,12 +31,7 @@ namespace Wallpapers.Controllers
 
         public IActionResult Index()
         {
-            return View(new HomeViewModel(_context, _userManager));
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            return View(new WallcloneViewModel(_context, _userManager));
         }
     }
 }

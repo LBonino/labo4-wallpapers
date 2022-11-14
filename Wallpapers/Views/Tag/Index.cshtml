@@ -1,0 +1,224 @@
+﻿@model Wallpapers.ViewModels.TagViewModel
+@{
+    var randomPostTags = Model.EightRandomPostTags;
+}
+
+<style>
+a {
+    color: #0cd;
+}
+
+.error-message {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+</style>
+
+@if (randomPostTags.Count > 0) {
+<style>
+    .tag-info-container {
+    width: 100%;
+    height: 33.4vh;
+    background: url(../wallpapers/fullsize/@randomPostTags[0].Post.Image.Filename);
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.tag-info-wrapper {
+    width: 90.3%;
+    height: 75%;
+    background-color: rgba(255,255,255,.17);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tag-info {
+    margin: 0 15px;
+    padding: 0 25px;
+    width: 60%;
+    background-color: rgba(26,26,26,.3);
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tag-name {
+    color: #9f9;
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-shadow: 1px 1px 2px rgb(0 0 0 / 75%), 1px 1px 7px rgb(0 0 0 / 50%);
+    margin: 0;
+}
+
+.more-tag-info {
+    width: 40%;
+    font-size: 1.2rem;
+}
+
+.tag-info-row {
+    background-color: rgba(26,26,26,.6);
+    margin: 15px 0;
+    border-radius: 4px;
+    font-weight: 300;
+    padding: 10px 8px;
+    display: flex;
+    align-items: center;
+}
+
+.tag-info-row span {
+    padding-right: 8px;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 16;
+    user-select: none;
+}
+
+.favorite-count {
+    display: flex;
+    align-items: center;
+}
+
+.tag-images-container {
+    width: 90.3%;
+    background-color: #1a1a1a;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 33%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.thumb-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%;
+
+}
+
+.thumb-grid img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 2%;
+}
+
+.thumb {
+    position: relative;
+    margin: 10px
+}
+
+.thumb:hover .thumb-info {
+    opacity: 1;
+}
+
+.thumb-info {
+    padding: 4px 0;
+    position: absolute;
+    bottom: 2px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .4);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 16px;
+    text-shadow: 1px 1px 2px rgb(0 0 0 / 75%), 1px 1px 7px rgb(0 0 0 / 50%);
+    cursor: default;
+    z-index: 1;
+}
+
+.resolution {
+    font-style: italic;
+}
+
+.thumb-info div {
+    padding: 0 10px;
+}
+
+.button {
+    margin-top: 20px;
+}
+</style>
+}
+
+@{
+    ViewData["Title"] = "Tag";
+    Layout = "_Layout";
+}
+
+
+
+@{
+    var tag = Model.Tag;
+
+    if (tag == null) {
+    <div class="error-message">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <h1>No pudimos encontrar el tag que estás buscando</h1>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Pudo haber sido eliminado o quizás nunca existió. ¿Quizás puedas intentar <a href="tags">buscarlo</a>?
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </p>
+    </div>
+    }
+    else {
+    <div class="tag-info-container">
+        <div class="tag-info-wrapper">
+            <div class="tag-info">
+                <p class="tag-name">#@tag.Name</p>
+                <div class="more-tag-info">
+                    <div class="tag-info-row">
+                        <span class="material-symbols-outlined">photo_library</span>
+                        @tag.PostTags.Count()
+                    </div>
+
+                    <div class="tag-info-row">
+                        <span class="material-symbols-outlined">person</span>
+                        <a href="~/user/@tag.User.UserName">@tag.User.UserName</a>&nbsp- @tag.AdditionDate.ToShortDateString()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tag-images-container">
+        <div class="thumb-grid">
+            @foreach (var postTag in randomPostTags) {
+                <a class="thumb" href="~/w/@postTag.PostId">
+                    <img src="~/wallpapers/thumbnail/@postTag.Post.Image.Filename" />
+                    <div class="thumb-info">
+                    <div class="resolution">@postTag.Post.Image.Width x @postTag.Post.Image.Height</div>
+                        <div class="favorite-count">
+                            @postTag.Post.Favorites.Count()
+                            <span class="material-symbols-outlined">
+                                star
+                            </span>
+                        </div>                       
+                    </div>
+                </a>
+            }
+        </div>
+
+        <a class="button" href="~/top?tag=@tag.TagId">
+            Más wallpapers
+        </a>
+    </div>
+
+    }
+}

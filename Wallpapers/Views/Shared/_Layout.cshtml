@@ -1,47 +1,68 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Wallpapers</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
-    <header>
-        <nav>
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Wallpapers</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - wallclone</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,1,0" />
+        <link rel="stylesheet" href="~/css/layout.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    </head>
+
+    <body>
+        <div class="body-container">
+            <header>
+                <nav class="top-menu">
+                    <a asp-controller="Home" asp-action="Index" class="logo">
+                        <h1>wallclone</h1>
+                    </a>
+                    <ul>
+                        <li>
+                            <a class="latest" href="~/latest">
+                                Más nuevos
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+                        <li>
+                            <a class="top" href="~/top">
+                                Top
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="random" href="~/random">
+                                Random
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="upload" href="~/upload">
+                                Subir
+                            </a>
                         </li>
                     </ul>
+                </nav>
+                
+                <div id="userpanel">
+                    <a class="button register" href="register">
+                        Registrarse
+                    </a>
+
+                    <a class="button" href="login">
+                        Iniciar sesión
+                    </a>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            </header>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Wallpapers - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <main role="main">
+                @RenderBody()
+            </main>
+
+            <partial name="_Footer" />
+
+            @RenderSection("Scripts", required: false)
         </div>
-    </footer>
-
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-</body>
+    </body>
 </html>

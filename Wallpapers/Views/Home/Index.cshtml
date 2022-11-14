@@ -3,10 +3,12 @@
     Layout = "";
 }
 
-@model Wallpapers.ViewModels.HomeViewModel
+@model Wallpapers.ViewModels.WallcloneViewModel
 
 <html>
     <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>
             wallclone
         </title>
@@ -15,7 +17,7 @@
     <body>
         <div id="body-container">
             <header>
-                <a asp-controller="Home" asp-action="Index">
+                <a asp-controller="Home" asp-action="Index" class="logo">
                     <h1>wallclone</h1>
                 </a>
                 <small>El <a class="hover-underline" target="_blank" href="https://wallhaven.cc">wallhaven.cc</a> de la salada</small>
@@ -35,13 +37,16 @@
 
                 <div class="popular-row">
                 @{
-                    var randomPostsToDisplay = Model.RandomPostsToDisplay;
+                    var randomPostsToDisplay = Model.PostsWithImages
+                        .OrderBy(p => Guid.NewGuid())
+                        .Take(15)
+                        .ToList();
 
                     for (int i = 0; i < 4; i++) 
                         {
-                        <a href="w/@randomPostsToDisplay[i].PostId">
-                            <img class="feat-4" src="~/wallpapers/thumbnail/@randomPostsToDisplay[i].Image.Filename" />
-                        </a>
+                            <a href="w/@randomPostsToDisplay[i].PostId">
+                                <img class="feat-4" src="~/wallpapers/thumbnail/@randomPostsToDisplay[i].Image.Filename" />
+                            </a>
                         }
                 }
                 </div>
@@ -84,9 +89,7 @@
                 </div>
             </main>
 
-            <footer>
-                <p>Todas las imágenes son propiedad de sus dueños originales. Sitio y código © <span class="strike">wallhaven.cc</span> wallclone</p>
-            </footer>
+            <partial name="_Footer" />
         </div>
     </body>
 </html>
