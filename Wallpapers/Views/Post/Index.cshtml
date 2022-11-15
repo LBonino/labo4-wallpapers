@@ -1,0 +1,182 @@
+﻿@model Wallpapers.ViewModels.PostViewModel
+
+@{
+    var post = Model.Post;
+
+    ViewData["Title"] = "Post";
+    Layout = "_Layout";
+}
+
+<style>
+.error-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+</style>
+
+@if (post == null) {
+    <div class="error-message">
+        <h1>No pudimos encontrar lo que estás buscando</h1>
+        <p>
+            ¿Quizás ingresaste mal el id del post?
+        </p>
+    </div>
+
+    return;
+}
+
+<style>
+.post-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    font-family: "Montserrat";
+    color: rgba(255, 255, 255, 0.85)
+}
+
+a {
+    transition: .3s ease-in;
+}
+
+a:hover {
+    filter: brightness(130%);
+    transition: .3s ease-out;
+}
+
+.username {
+    color: #08A6F6;
+}
+
+.post-info-container {
+    height: 3rem;
+    background-color: #1b1b1b;
+    border-bottom: solid 1px #292929;
+    box-shadow: 0 0 7px rgb(0 0 0 / 50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-info {
+    margin: 50px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+
+.info {
+    display: flex;
+    justify-content: center;
+    width: 25%;
+}
+
+.info div {
+    margin: 0 20px;
+}
+
+.resolution {
+    font-size: 1.6rem;
+    font-weight: 400;
+    font-family: "Montserrat";
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 42;
+    user-select: none;
+    margin-right: 5px;
+}
+
+.fav:hover {
+    color: gold;
+}
+
+.download:hover {
+    color: green;
+}
+
+.download {
+    display: flex;
+    align-items: center;
+}
+
+.wallpaper-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.wallpaper {
+    max-height: 82vh;
+}
+
+.property {
+    display: flex;
+    align-items: center;
+}
+
+footer {
+    display: none;
+}
+</style>
+
+<div class="post-container">
+    <div class="post-info-container">
+        <div class="post-info">
+            <div class="info">
+                <div class="property">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+
+                    <a class="username" href="~/user/@post.User.UserName">@post.User.UserName</a>
+                </div>
+
+                <div class="property">
+                    <span class="material-symbols-outlined">
+                        calendar_month
+                    </span>
+
+                    @post.SubmissionDate.ToShortDateString()
+                </div>
+            </div>
+
+            <div class="info resolution">
+                @post.Image.Width x @post.Image.Height
+            </div>
+
+            <div class="info">
+                <div class="property fav">
+                    <span class="material-symbols-outlined">
+                        star
+                    </span>
+
+                    @post.Favorites.Count()
+                </div>
+
+                <div class="property">
+                    <a href="~/wallpapers/fullsize/@post.Image.Filename" download class="download">
+                        <span class="material-symbols-outlined">
+                            file_download
+                        </span>
+
+                        @(Math.Round(@post.Image.SizeInBytes * 0.000001, 1)) MiB
+                    </a>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="wallpaper-container">
+        <img class="wallpaper" src="~/wallpapers/fullsize/@post.Image.Filename" />
+    </div>
+</div>
+
+
+@*<img src="~/wallpapers/fullsize/@post.Image.Filename"/>*@

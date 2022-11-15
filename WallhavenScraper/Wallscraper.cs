@@ -61,8 +61,8 @@ namespace WallhavenScraper
             }
 
             string resultsFolderPath = $"wallpapers/{_resultsFolderName}";
-            string fullSizeFolderPath = resultsFolderPath + "/fullsize";
-            string thumbnailFolderPath = resultsFolderPath + "/preview";
+            string fullSizeFolderPath = resultsFolderPath + "/FullSize";
+            string thumbnailFolderPath = resultsFolderPath + "/Thumbnail";
 
             Console.WriteLine($"\nCreating folder to save images in: {resultsFolderPath}");
             Directory.CreateDirectory(fullSizeFolderPath);

@@ -44,7 +44,7 @@ namespace Wallpapers.Models
                 UserName = "Admin",
                 NormalizedUserName = "ADMIN",
                 Email = "lisandrobonino4@protonmail.com",
-                NormalizedEmail = "LISANDROBONINO4@PROTONMAIL.com",
+                NormalizedEmail = "LISANDROBONINO4@PROTONMAIL.COM",
                 EmailConfirmed = true,
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
@@ -54,7 +54,7 @@ namespace Wallpapers.Models
                 UserName = "catLover",
                 NormalizedUserName = "CATLOVER",
                 Email = "wallpapers.catlover@protonmail.com",
-                NormalizedEmail = "WALLPAPERS.CATLOVER@PROTONMAIL.com",
+                NormalizedEmail = "WALLPAPERS.CATLOVER@PROTONMAIL.COM",
                 EmailConfirmed = true,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
@@ -64,7 +64,7 @@ namespace Wallpapers.Models
                 UserName = "doggofan",
                 NormalizedUserName = "DOGGOFAN",
                 Email = "wallpapers.doggofan@protonmail.com",
-                NormalizedEmail = "WALLPAPERS.DOGGOFAN@PROTONMAIL.com",
+                NormalizedEmail = "WALLPAPERS.DOGGOFAN@PROTONMAIL.COM",
                 EmailConfirmed = true,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
@@ -73,13 +73,23 @@ namespace Wallpapers.Models
             {
                 UserName = "birb_enthusiast",
                 NormalizedUserName = "BIRB_ENTHUSIAST",
-                Email = "wallpapers.birbenthusiast@protonmail.com",
-                NormalizedEmail = "WALLPAPERS.BIRBENTHUSIAST@PROTONMAIL.com",
+                Email = "wallpapers.birbenthusiast@protonmail.COM",
+                NormalizedEmail = "WALLPAPERS.BIRBENTHUSIAST@PROTONMAIL.COM",
                 EmailConfirmed = true,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 
-            var uploaders = new List<ApplicationUser> { doggoFan, catLover, birbEnthusiast, admin };
+            var aenami = new ApplicationUser
+            {
+                UserName = "aenami",
+                NormalizedUserName = "AENAMI",
+                Email = "aenami@art.com",
+                NormalizedEmail = "AENAMI@ART.COM",
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            var uploaders = new List<ApplicationUser> { doggoFan, catLover, birbEnthusiast, aenami, admin };
             foreach (var user in uploaders)
             {
                 if (!userManager.Users.Any(r => r.UserName == user.UserName))
@@ -144,6 +154,15 @@ namespace Wallpapers.Models
                     .First().Id
             };
 
+            var digitalArtTag = new Tag
+            {
+                Name = "Digital Art",
+                AdditionDate = DateTime.Now.AddDays(-13),
+                UserId = userManager.Users
+                    .Where(user => user.UserName == "aenami")
+                    .First().Id
+            };
+
             using (var context = new ApplicationDbContext(
                 serviceProvider.GetRequiredService<
                     DbContextOptions<ApplicationDbContext>>()))
@@ -152,7 +171,7 @@ namespace Wallpapers.Models
 
                 if (!context.Tags.Any())
                 {
-                    context.Tags.AddRange(catTag, dogTag, birdTag);
+                    context.Tags.AddRange(catTag, dogTag, birdTag, digitalArtTag);
                     await context.SaveChangesAsync();
                 }
 
@@ -161,6 +180,7 @@ namespace Wallpapers.Models
                 {
                     var wallpapersToSeedPath = Path.Combine(Directory.GetCurrentDirectory(), "WallpapersToSeed");
 
+                    var aenamiFullSizeToSeedPath = Path.Combine(wallpapersToSeedPath, "Aenami\\fullsize");
                     var dogsFullSizeToSeedPath = Path.Combine(wallpapersToSeedPath, "Dogs\\fullsize");
                     var catsFullSizeToSeedPath = Path.Combine(wallpapersToSeedPath, "Cats\\fullsize");
                     var birdsFullSizeToSeedPath = Path.Combine(wallpapersToSeedPath, "Birds\\fullsize");
@@ -177,6 +197,11 @@ namespace Wallpapers.Models
                         .Where(user => user.UserName == "birb_enthusiast")
                         .First().Id;
 
+                    var aenamiId = userManager.Users
+                        .Where(user => user.UserName == "aenami")
+                        .First().Id;
+
+
                     var dogsTag = context.Tags
                         .Where(tag => tag.Name == "Dogs")
                         .First();
@@ -187,6 +212,10 @@ namespace Wallpapers.Models
 
                     var birdsTag = context.Tags
                         .Where(tag => tag.Name == "Birds")
+                        .First();
+
+                    var digitalArtsTag = context.Tags
+                        .Where(tag => tag.Name == "Digital Art")
                         .First();
 
                     var folderToSaveWallpaperPath = Path.Combine(
@@ -217,9 +246,22 @@ namespace Wallpapers.Models
                         birdsTag,
                         context
                     );
+
+                    await SeedWallpaperBatch(
+                        aenamiFullSizeToSeedPath,
+                        folderToSaveWallpaperPath,
+                        aenamiId,
+                        digitalArtsTag,
+                        context
+                    );
                 }
 
-                if (!context.Favorite.Any())
+                var normie = userManager.Users.Where(user => user.UserName == "normie1").FirstOrDefault();
+                
+                if (
+                    normie != null
+                    && !context.Favorite.Any(f => f.UserId == normie.Id)
+                )
                 {
                     // Hacer que usuarios seedeados agreguen a favs algunos posts al azar
                     var favorites = new List<Favorite>();

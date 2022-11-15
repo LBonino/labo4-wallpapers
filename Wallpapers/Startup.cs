@@ -85,6 +85,12 @@ namespace Wallpapers
                     defaults: new {controller = "Tag", action = "Index" }
                 );
 
+                endpoints.MapControllerRoute(
+                    name: "post",
+                    pattern: "w/{id}",
+                    defaults: new { controller = "Post", action = "Index" }
+                );
+
                 endpoints.MapRazorPages();
 
                 

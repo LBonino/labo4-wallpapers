@@ -7,12 +7,10 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,1,0" />
         <link rel="stylesheet" href="~/css/layout.css" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     </head>
 
     <body>
-        <div class="body-container">
+
             <header>
                 <nav class="top-menu">
                     <a asp-controller="Home" asp-action="Index" class="logo">
@@ -46,11 +44,11 @@
                 </nav>
                 
                 <div id="userpanel">
-                    <a class="button register" href="register">
+                    <a class="button register" href="~/register">
                         Registrarse
                     </a>
 
-                    <a class="button" href="login">
+                    <a class="button" href="~/login">
                         Iniciar sesión
                     </a>
                 </div>
@@ -63,6 +61,6 @@
             <partial name="_Footer" />
 
             @RenderSection("Scripts", required: false)
-        </div>
+
     </body>
 </html>
