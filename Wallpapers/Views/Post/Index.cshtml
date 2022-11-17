@@ -109,6 +109,11 @@ a:hover {
     transition: .3s ease-out;
 }
 
+.del:hover {
+    color: red;
+    transition: .3s ease-out;
+}
+
 .download:hover {
     color: green;
 }
@@ -182,10 +187,11 @@ button[type="submit"] {
                         ? $"favorites/add?postId={post.PostId}&userId={userId}"
                         : $"favorites/add";
                 }
+
                 <form asp-route="addFavorites">
                     <button type="submit" class="fav">
-                    <input type="hidden" id="userId" name="userId" value="@userId"/>
-                    <input type="hidden" id="postId" name="postId" value="@post.PostId"/>
+                        <input type="hidden" id="userId" name="userId" value="@userId" />
+                        <input type="hidden" id="postId" name="postId" value="@post.PostId" />
                         <span class="material-symbols-outlined">
                             star
                         </span>
@@ -204,7 +210,17 @@ button[type="submit"] {
                     </a>
                 </div>
 
-                
+                @if (post.UserId == userId)
+                {
+                    <form asp-route="delete">
+                        <button type="submit" class="del">
+                            <input type="hidden" id="postId" name="postId" value="@post.PostId" />
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </button>
+                    </form>
+                }
             </div>
         </div>
     </div>

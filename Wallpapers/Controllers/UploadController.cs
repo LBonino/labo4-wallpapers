@@ -38,8 +38,6 @@ namespace Wallpapers.Controllers
                 return View(model);
             }
 
-            //return View(model);
-
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var tag = _context.Tags

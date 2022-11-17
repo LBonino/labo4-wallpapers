@@ -158,7 +158,13 @@ namespace Wallpapers
                 endpoints.MapControllerRoute(
                     name: "upload",
                     pattern: "upload",
-                    defaults: new { controller = "Upload", action = "ToggleFavorite" }
+                    defaults: new { controller = "Upload", action = "Index" }
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "delete",
+                    pattern: "delete",
+                    defaults: new { controller = "Delete", action = "Index" }
                 );
 
                 endpoints.MapRazorPages();  
