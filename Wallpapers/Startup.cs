@@ -155,6 +155,12 @@ namespace Wallpapers
                     defaults: new { controller = "List", action = "ToggleFavorite" }
                 );
 
+                endpoints.MapControllerRoute(
+                    name: "upload",
+                    pattern: "upload",
+                    defaults: new { controller = "Upload", action = "ToggleFavorite" }
+                );
+
                 endpoints.MapRazorPages();  
             });
         }

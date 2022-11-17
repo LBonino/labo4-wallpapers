@@ -46,7 +46,7 @@ namespace WallhavenScraper
 
         static async Task DownloadWallpapersAsync(HttpClient client)
         {
-            string queryString = $"q={_searchTerm}&categories=110&purity=100&sorting=favorites&order=desc";
+            string queryString = $"q={_searchTerm}&categories=110&purity=100&sorting=relevance&order=desc";
             await using Stream jsonStream = await client.GetStreamAsync(
                 $"https://wallhaven.cc/api/v1/search?{queryString}"
             );

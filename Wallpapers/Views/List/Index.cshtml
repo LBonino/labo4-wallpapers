@@ -261,6 +261,12 @@ footer {
         <div class="page-menu">
             @if (somePosts.Count == 0)
             {
+                @if (sortingMethod == "favorites")
+                {
+                    <h1>Aún no tienes wallpapers agregados a favoritos</h1>
+
+                    return;
+                }
                 <h1>No encontramos ningún post con el Tag ID ingresado...</h1>
 
                     <div class="filter-menu">
