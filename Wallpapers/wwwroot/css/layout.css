@@ -35,6 +35,10 @@ a {
     color: inherit;
 }
 
+.username {
+    color: #0cd !important;
+}
+
 .logo {
     color: rgba(255, 255, 255, 0.86);
     padding: 0 18px;

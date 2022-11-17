@@ -42,8 +42,9 @@
                         </li>
                     </ul>
                 </nav>
-                
+
                 <div id="userpanel">
+                @if (!User.Identity.IsAuthenticated) {
                     <a class="button register" href="~/register">
                         Registrarse
                     </a>
@@ -51,6 +52,14 @@
                     <a class="button" href="~/login">
                         Iniciar sesión
                     </a>
+                }
+                else {
+                    <a class="username" style="margin-right: 15px;" href="~/user/@User.Identity.Name">@User.Identity.Name</a>
+
+                    <a class="button" href="~/logout">
+                        Cerrar sesión
+                    </a>
+                }
                 </div>
             </header>
 

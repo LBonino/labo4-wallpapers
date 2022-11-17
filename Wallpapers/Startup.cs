@@ -115,6 +115,24 @@ namespace Wallpapers
                     defaults: new { controller = "List", action = "Index" }
                 );
 
+                endpoints.MapControllerRoute(
+                    name: "logout",
+                    pattern: "logout",
+                    defaults: new { controller = "Login", action = "Logout" }
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "login",
+                    pattern: "login",
+                    defaults: new { controller = "Login", action = "Index" }
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "register",
+                    pattern: "register",
+                    defaults: new { controller = "Register", action = "Index" }
+                );
+
                 endpoints.MapRazorPages();  
             });
         }
