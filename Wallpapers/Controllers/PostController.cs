@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Wallpapers.Data;
 using Wallpapers.ViewModels;
 
@@ -13,6 +14,7 @@ namespace Wallpapers.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         public IActionResult Index(int id)
         {
 

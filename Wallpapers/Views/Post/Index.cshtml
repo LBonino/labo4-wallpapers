@@ -1,9 +1,13 @@
-﻿@model Wallpapers.ViewModels.PostViewModel
+﻿@using System.Security.Claims
+@model Wallpapers.ViewModels.PostViewModel
 
 @{
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     var post = Model.Post;
     var tags = Model.Tags;
     var tagNames = new List<string>();
+    var userAddedToFav = Model.UserAddedToFav(userId, post.PostId);
+    var favvedColor = (userAddedToFav) ? "gold" : "inherit";
 
     foreach (var tag in tags) {
         tagNames.Add(tag.Name);
@@ -96,8 +100,13 @@ a:hover {
     margin-right: 5px;
 }
 
+.fav {
+    color: @favvedColor !important;
+}
+
 .fav:hover {
-    color: gold;
+    color: gold !important;
+    transition: .3s ease-out;
 }
 
 .download:hover {
@@ -128,6 +137,18 @@ a:hover {
 footer {
     display: none;
 }
+
+button[type="submit"] {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    display: flex;
+    align-items: center;
+}
 </style>
 
 <div class="post-container">
@@ -156,13 +177,22 @@ footer {
             </div>
 
             <div class="info">
-                <div class="property fav">
-                    <span class="material-symbols-outlined">
-                        star
-                    </span>
+                @{
+                    var favHref = (userId != null)
+                        ? $"favorites/add?postId={post.PostId}&userId={userId}"
+                        : $"favorites/add";
+                }
+                <form asp-route="addFavorites">
+                    <button type="submit" class="fav">
+                    <input type="hidden" id="userId" name="userId" value="@userId"/>
+                    <input type="hidden" id="postId" name="postId" value="@post.PostId"/>
+                        <span class="material-symbols-outlined">
+                            star
+                        </span>
 
-                    @post.Favorites.Count()
-                </div>
+                        @post.Favorites.Count()
+                    </button>
+                </form>
 
                 <div class="property">
                     <a href="~/wallpapers/fullsize/@post.Image.Filename" download class="download">
@@ -185,4 +215,6 @@ footer {
 </div>
 
 
-@*<img src="~/wallpapers/fullsize/@post.Image.Filename"/>*@
+<script>
+    const star 
+</script>

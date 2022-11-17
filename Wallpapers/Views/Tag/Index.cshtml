@@ -72,6 +72,8 @@
     font-size: 2.5rem;
     text-shadow: 1px 1px 2px rgb(0 0 0 / 75%), 1px 1px 7px rgb(0 0 0 / 50%);
     margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .more-tag-info {
@@ -186,13 +188,19 @@
 .username {
     color: #0cd;
 }
+
+.tag-id {
+    font-size: 1rem;
+    margin-left: 5px;
+}
 </style>
 
 
 <div class="tag-info-container">
     <div class="tag-info-wrapper">
         <div class="tag-info">
-            <p class="tag-name">#@tag.Name</p>
+            <p class="tag-name">#@tag.Name <span class="tag-id">id: @tag.TagId</span></p>
+            
             <div class="more-tag-info">
                 <div class="tag-info-row">
                     <span class="material-symbols-outlined">photo_library</span>

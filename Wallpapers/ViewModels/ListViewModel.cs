@@ -17,14 +17,17 @@ namespace Wallpapers.ViewModels
         private readonly int _tagIdToFilter;
         private readonly IQueryable<Post> _posts;
         public readonly int _pageIndex;
+        private readonly string? _userId;
 
         public ListViewModel(
             ApplicationDbContext context,
             string sortingMethod,
             int page,
-            int tagIdToFilter
+            int tagIdToFilter,
+            string? userId
         )
         {
+            _userId = userId;
             _context = context;
             _sortingMethod = sortingMethod;
             _tagIdToFilter = 
@@ -71,9 +74,24 @@ namespace Wallpapers.ViewModels
                             .Take(_pageSize)
                             .ToList();
 
-                    default:
+                    case "top":
                         return _posts
                             .OrderByDescending(p => p.Favorites.Count())
+                            .Skip(_pageSize * _pageIndex - _pageSize)
+                            .Take(_pageSize)
+                            .ToList();
+                    default:
+                           return _posts
+                            .Join(_context.Favorite,
+                            p => p.PostId,
+                            f => f.PostId,
+                            (p, f) => new
+                            {
+                                post = p,
+                                userId = f.UserId,
+                            })
+                            .Where(pf => pf.userId == _userId)
+                            .Select(p => p.post)
                             .Skip(_pageSize * _pageIndex - _pageSize)
                             .Take(_pageSize)
                             .ToList();

@@ -10,35 +10,40 @@
     {
         "latest" => "Últimos",
         "top" => "Top",
-        _ => "Random"
+        "random" => "Random",
+        _ => "Favoritos"
     };
 
     var sortingMethodDescription = sortingMethod switch
     {
         "latest" => "Los últimos wallpapers subidos por la comunidad",
         "top" => "Los wallpapers más votados",
-        _ => "Wallpapers ordenados al azar"
+        "random" => "Wallpapers ordenados al azar",
+        _ => "Tus wallpapers favoritos" 
     };
 
     var icon = sortingMethod switch
     {
         "latest" => "schedule",
         "top" => "mode_heat",
-        _ => "shuffle"
+        "random" => "shuffle",
+        _ => "star"
     };
 
     var iconColor = sortingMethod switch
     {
         "latest" => "#ad3",
         "top" => "#f43",
-        _ => "#b760f0"
+        "random" => "#b760f0",
+        _ => "gold"
     };
 
     var headerBackgroundColor = sortingMethod switch
     {
         "latest" => "radial-gradient(400px 80px at 0px top, rgba(170, 221, 51, .3), transparent)",
         "top" => "radial-gradient(400px 80px at 0px top, rgba(240, 96, 96, .3), transparent)",
-        _ => "radial-gradient(400px 80px at 0px top, rgba(183, 96, 240, .3), transparent)"
+        "random" => "radial-gradient(400px 80px at 0px top, rgba(183, 96, 240, .3), transparent)",
+        _ => "radial-gradient(400px 80px at 0px top, rgba(255,215,0,.3), transparent)"
     };
 
     ViewData["Title"] = sortingMethodDisplayed + " Wallpapers";
@@ -292,7 +297,7 @@ footer {
             </div>
 
             
-        @if (sortingMethod != "random")
+        @if (sortingMethod != "random" && sortingMethod != "favorites")
         {
             <div class="page-buttons">
                 <a asp-route="@sortingMethod"
@@ -331,7 +336,7 @@ footer {
         }
     </div>
 
-    @if (sortingMethod != "random") {
+    @if (sortingMethod != "random" && sortingMethod != "favorites") {
         <div class="page-buttons">
             <a asp-route="@sortingMethod"
            asp-route-page="@(Model._pageIndex - 1)"

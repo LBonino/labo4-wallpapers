@@ -43,5 +43,16 @@ namespace Wallpapers.ViewModels
                 return tags.ToList();
             }
         }
+
+        public bool UserAddedToFav(string userId, int postId)
+        {
+            var possibleFav = _context.Favorite
+                .Where(f => f.UserId == userId && f.PostId == postId)
+                .SingleOrDefault();
+
+            return (possibleFav == null)
+                ? false
+                : true;
+        }
     }
 }

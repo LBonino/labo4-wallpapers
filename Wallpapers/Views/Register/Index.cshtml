@@ -12,6 +12,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 
 }
 .form-container {
@@ -69,9 +70,14 @@ form button:hover {
     filter: brightness(120%);
     transition: .25s ease-in;
 }
+
+h2 {
+    font-family: "Montserrat"
+}
 </style>
 
 <div class="content">
+    <h2>Regístrate</h2>
     <div class="form-container">
         <form asp-controller="Register" asp-action="Index" method="post">
             <input asp-for="Username" placeholder="Nombre de usuario"/>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Wallpapers.Data;
 using Wallpapers.Models;
@@ -16,13 +17,15 @@ namespace Wallpapers.Controllers
             _userManager = userManager;
         }
 
-         public IActionResult Index(int id)
+        [AllowAnonymous]
+        public IActionResult Index(int id)
          {
              return View(
                  new TagViewModel(id, _context)
              );
          }
 
+        [AllowAnonymous]
         public IActionResult Tags()
         {
             return View(new TagsViewModel(_context));

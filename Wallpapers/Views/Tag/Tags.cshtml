@@ -75,6 +75,8 @@ p {
     font-size: 1.3rem;
     color: #9f9;
     margin-right: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .col {
@@ -91,6 +93,10 @@ p {
 .col-2 * {
     margin-right: 10px;
 }
+
+.tag-id {
+    font-size: 0.75rem;
+}
 </style>
 
 <div class="content-container">
@@ -103,7 +109,7 @@ p {
             <div class="tag-info">
                 <div class="col">
                     <div class="icon-with-data">
-                        <a class="tag-link" href="tag/@tag.TagId">@tag.Name</a>
+                        <a class="tag-link" href="tag/@tag.TagId">#@tag.Name <span class="tag-id">id: @tag.TagId</span></a>
                         <span class="material-symbols-outlined">person</span>
                         <a href="user/@tag.User.UserName" class="username">@tag.User.UserName</a>
                     </div>

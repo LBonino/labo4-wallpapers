@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wallpapers.Models;
 using Wallpapers.Controllers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Wallpapers
 {
@@ -37,6 +38,15 @@ namespace Wallpapers
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -131,6 +141,18 @@ namespace Wallpapers
                     name: "register",
                     pattern: "register",
                     defaults: new { controller = "Register", action = "Index" }
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "favorites",
+                    pattern: "favorites",
+                    defaults: new { controller = "List", action = "Favorites" }
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "addFavorites",
+                    pattern: "favorites/add",
+                    defaults: new { controller = "List", action = "ToggleFavorite" }
                 );
 
                 endpoints.MapRazorPages();  

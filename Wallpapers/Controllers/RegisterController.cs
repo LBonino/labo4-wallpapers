@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,12 +17,14 @@ namespace Wallpapers.Controllers
             this.userManager = userManager;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(new RegisterViewModel());
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Index(RegisterViewModel model)
         {
             if (!ModelState.IsValid)

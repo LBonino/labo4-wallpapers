@@ -12,6 +12,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+h2 {
+    font-family: "Montserrat"
 }
 
 .form-container {
@@ -72,6 +77,7 @@ form button:hover {
 </style>
 
 <div class="content">
+    <h2>Inicia sesión</h2>
     <div class="form-container">
         <form asp-controller="Login" asp-action="Index" method="post">
             <input asp-for="Username" placeholder="Nombre de usuario" />
