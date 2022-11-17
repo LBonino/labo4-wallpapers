@@ -13,9 +13,11 @@
             wallclone
         </title>
         <link rel="stylesheet" href="~/css/landing.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     </head>
     <body>
-        <div id="body-container">
+        <div id="body-container">   
             <header>
                 <a asp-controller="Home" asp-action="Index" class="logo">
                     <h1>wallclone</h1>
@@ -24,6 +26,56 @@
             </header>
 
             <main>
+                <div class="top-menu">
+                    <a href="latest">
+                        <div class="top-menu-item latest">
+                            <span class="material-symbols-outlined">
+                                schedule
+                            </span>
+
+                            <span>
+                                Últimos
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="top">
+                        <div class="top-menu-item top">
+                            <span class="material-symbols-outlined">
+                                schedule
+                            </span>
+
+                            <span>
+                                Top
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="random">
+                        <div class="top-menu-item random">
+                            <span class="material-symbols-outlined">
+                                schedule
+                            </span>
+
+                            <span>
+                                Random
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="upload">
+                        <div class="top-menu-item upload">
+                            <span class="material-symbols-outlined">
+                                schedule
+                            </span>
+
+                            <span>
+                                Subir
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
                 <div id="popular-tags">
                     @foreach (var tag in Model.Tags) 
                     {

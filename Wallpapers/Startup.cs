@@ -86,14 +86,36 @@ namespace Wallpapers
                 );
 
                 endpoints.MapControllerRoute(
+                    name: "tags",
+                    pattern: "tags",
+                    defaults: new { controller = "Tag", action = "Tags" }
+                );
+
+                endpoints.MapControllerRoute(
                     name: "post",
                     pattern: "w/{id}",
                     defaults: new { controller = "Post", action = "Index" }
                 );
 
-                endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                    name: "latest",
+                    pattern: "latest",
+                    defaults: new { controller = "List", action = "Index"}
+                );
 
-                
+                endpoints.MapControllerRoute(
+                    name: "random",
+                    pattern: "random",
+                    defaults: new { controller = "List", action = "Index" }
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "top",
+                    pattern: "top",
+                    defaults: new { controller = "List", action = "Index" }
+                );
+
+                endpoints.MapRazorPages();  
             });
         }
     }

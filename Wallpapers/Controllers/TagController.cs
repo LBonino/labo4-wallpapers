@@ -17,11 +17,15 @@ namespace Wallpapers.Controllers
         }
 
          public IActionResult Index(int id)
-        {
+         {
+             return View(
+                 new TagViewModel(id, _context)
+             );
+         }
 
-            return View(
-                new TagViewModel(id, _context)
-            );
+        public IActionResult Tags()
+        {
+            return View(new TagsViewModel(_context));
         }
     }
 }

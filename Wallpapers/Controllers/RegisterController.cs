@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Wallpapers.ViewModels;
 
 namespace Wallpapers.Controllers
 {
@@ -6,7 +7,13 @@ namespace Wallpapers.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(new RegisterViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult Index(RegisterViewModel model)
+        {
+            return View(model);
         }
     }
 }

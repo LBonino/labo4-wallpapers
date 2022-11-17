@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using Wallpapers.Data;
 using Wallpapers.Models;
 
@@ -25,6 +27,20 @@ namespace Wallpapers.ViewModels
                     .Include(p => p.Favorites)
                     .SingleOrDefaultAsync(p => p.PostId == _postId)
                     .Result;
+            }
+        }
+
+        public List<Tag> Tags
+        {
+            get
+            {
+                var tags =
+                    from tag in _context.Tags
+                    join postTags in _context.PostTags on tag.TagId equals postTags.TagId
+                    where postTags.PostId == _postId
+                    select tag;
+
+                return tags.ToList();
             }
         }
     }

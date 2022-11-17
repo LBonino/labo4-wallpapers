@@ -1,0 +1,362 @@
+﻿@using System.Text.Json
+@model Wallpapers.ViewModels.ListViewModel
+
+
+@{
+    string sortingMethod = @Model.SortingMethod.ToLower() ;
+    var somePosts = @Model.PostsPage;
+
+    var sortingMethodDisplayed = sortingMethod switch
+    {
+        "latest" => "Últimos",
+        "top" => "Top",
+        _ => "Random"
+    };
+
+    var sortingMethodDescription = sortingMethod switch
+    {
+        "latest" => "Los últimos wallpapers subidos por la comunidad",
+        "top" => "Los wallpapers más votados",
+        _ => "Wallpapers ordenados al azar"
+    };
+
+    var icon = sortingMethod switch
+    {
+        "latest" => "schedule",
+        "top" => "mode_heat",
+        _ => "shuffle"
+    };
+
+    var iconColor = sortingMethod switch
+    {
+        "latest" => "#ad3",
+        "top" => "#f43",
+        _ => "#b760f0"
+    };
+
+    var headerBackgroundColor = sortingMethod switch
+    {
+        "latest" => "radial-gradient(400px 80px at 0px top, rgba(170, 221, 51, .3), transparent)",
+        "top" => "radial-gradient(400px 80px at 0px top, rgba(240, 96, 96, .3), transparent)",
+        _ => "radial-gradient(400px 80px at 0px top, rgba(183, 96, 240, .3), transparent)"
+    };
+
+    ViewData["Title"] = sortingMethodDisplayed + " Wallpapers";
+    Layout = "_Layout";
+}
+
+<style>
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 48
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.header {
+    width: 100%;
+    height: 5.5rem;
+    display: flex;
+    align-items: center;
+    background-image: @headerBackgroundColor;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    padding-left: 40px;
+    font: "Montserrat";
+    font-weight: 700;
+    text-shadow: 1px 2px 4px #000;
+}
+
+.header-content-top {
+    display: flex;
+    align-items: center;
+    padding-bottom: 4px;
+}
+
+.header-content-top span {
+    color: @iconColor;
+    transform: scale(1.8)
+}
+
+h2 {
+    font-size: 2rem;
+    margin: 0;
+    padding-left: 27px;
+}
+
+.thumb-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%;
+}
+
+.thumb-grid img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 2%;
+}
+
+.thumb {
+    position: relative;
+    margin: 10px
+}
+
+.thumb:hover .thumb-info {
+    opacity: 1;
+}
+
+.thumb-info {
+    padding: 4px 0;
+    position: absolute;
+    bottom: 2px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .4);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 16px;
+    text-shadow: 1px 1px 2px rgb(0 0 0 / 75%), 1px 1px 7px rgb(0 0 0 / 50%);
+    cursor: default;
+    z-index: 1;
+}
+
+.resolution {
+    font-style: italic;
+}
+
+.thumb-info div {
+    padding: 0 10px;
+}
+
+.button {
+    margin-top: 20px;
+}
+
+.favorite-count {
+    display: flex;
+    align-items: center;
+}
+
+.favorite-count span {
+    display: flex;
+    align-items: center;
+    transform: scale(0.75);
+}
+
+footer {
+    display: none;
+}
+
+.page-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 5vw;
+    height: 2rem;
+    margin: 1rem 0;
+}
+
+.page-buttons span {
+    transform: scale(2.3);
+}
+
+.disabled {
+    pointer-events: none;
+    filter: brightness(40%);
+}
+
+.filter-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-menu div {
+    display: flex;
+}
+
+.filter-menu div * {
+    margin-right: 20px;
+}
+
+.filter-menu a {
+    margin-top: 8px;
+    margin-left: 4px;
+    align-self: flex-start;
+}
+
+.tag-input {
+    background-color: #303030;
+    border-radius: 2px;
+    height: 20px;
+    width: 70%;
+    padding: 8px;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.55);
+    border: none;
+}
+
+.tag-input:focus {
+    outline: none;
+    filter: brightness(120%);
+}
+
+
+.tag-input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+#filter {
+    margin: 0;
+}
+</style>
+
+<div class="content">
+    <div class="header">
+        <div class="header-content">
+            <div class="header-content-top">
+                <span class="material-symbols-outlined">
+                    @icon
+                </span>
+                <h2>@sortingMethodDisplayed</h2>
+            </div>
+            <div>
+                @sortingMethodDescription
+            </div>
+        </div>
+    </div>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+        <div class="page-menu">
+            @if (somePosts.Count == 0)
+            {
+                <h1>No encontramos ningún post con el Tag ID ingresado...</h1>
+
+                    <div class="filter-menu">
+                        <div>
+                            <input id="tag-input" class="tag-input" type="number" placeholder="Filtrar por Tag ID">
+                            <a id="filter" class="button" href="@Context.Request.PathBase">
+                                Filtrar
+                            </a>
+                        </div>
+                        <a href="tags">Lista de tags</a>
+                    </div>
+
+                <script>
+                    const filterAnchor = document.querySelector("#filter");
+                    const tagInput = document.querySelector("#tag-input");
+                    const sortingMethod = @Html.Raw(JsonSerializer.Serialize(sortingMethod));
+
+                    tagInput.addEventListener("input", () => {
+                        filterAnchor.href = `${sortingMethod}?tag=${tagInput.value}`
+                    })
+                </script>
+
+                return;
+            }
+
+            <div class="filter-menu">
+                <div>
+                    <input id="tag-input" class="tag-input" type="number" placeholder="Filtrar por Tag ID">
+                <a id="filter" class="button" href="@Context.Request.PathBase">
+                    Filtrar
+                </a>
+                </div>
+                <a href="tags">Lista de tags</a>
+            </div>
+
+            
+        @if (sortingMethod != "random")
+        {
+            <div class="page-buttons">
+                <a asp-route="@sortingMethod"
+                   asp-route-page="@(Model._pageIndex - 1)"
+                   class="btn btn-default @prevDisabled">
+                    <span class="material-symbols-outlined">
+                        navigate_before
+                    </span>
+                </a>
+                <a asp-route="@sortingMethod"
+                   asp-route-page="@(Model._pageIndex + 1)"
+                   class="btn btn-default @nextDisabled">
+                    <span class="material-symbols-outlined">
+                        navigate_next
+                    </span>
+                </a>
+            </div>
+        }
+    </div>
+
+    <div class="thumb-grid">
+        @foreach (var post in somePosts)
+        {
+            <a class="thumb" href="~/w/@post.PostId">
+                <img src="~/wallpapers/thumbnail/@post.Image.Filename" />
+                <div class="thumb-info">
+                    <div class="resolution">@post.Image.Width x @post.Image.Height</div>
+                    <div class="favorite-count">
+                        @post.Favorites.Count()
+                        <span class="material-symbols-outlined">
+                            star
+                        </span>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+
+    @if (sortingMethod != "random") {
+        <div class="page-buttons">
+            <a asp-route="@sortingMethod"
+           asp-route-page="@(Model._pageIndex - 1)"
+           class="btn btn-default @prevDisabled">
+                <span class="material-symbols-outlined">
+                    navigate_before
+                </span>
+            </a>
+            <a asp-route="@sortingMethod"
+           asp-route-page="@(Model._pageIndex + 1)"
+           class="btn btn-default @nextDisabled">
+                <span class="material-symbols-outlined">
+                    navigate_next
+                </span>
+            </a>
+        </div>
+    }
+</div>
+
+<script>
+    const filterAnchor = document.querySelector("#filter");
+    const tagInput = document.querySelector("#tag-input");
+    const sortingMethod = @Html.Raw(JsonSerializer.Serialize(sortingMethod));
+
+    tagInput.addEventListener("input", () => {
+        filterAnchor.href = `${sortingMethod}?tag=${tagInput.value}`
+    })
+</script>

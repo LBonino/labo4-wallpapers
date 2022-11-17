@@ -2,8 +2,14 @@
 
 @{
     var post = Model.Post;
+    var tags = Model.Tags;
+    var tagNames = new List<string>();
 
-    ViewData["Title"] = "Post";
+    foreach (var tag in tags) {
+        tagNames.Add(tag.Name);
+    }
+
+    ViewData["Title"] = string.Join(", ", tagNames);
     Layout = "_Layout";
 }
 

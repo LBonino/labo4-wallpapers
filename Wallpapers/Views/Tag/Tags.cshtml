@@ -1,0 +1,125 @@
+﻿@model Wallpapers.ViewModels.TagsViewModel
+
+@{
+    var tags = Model.Tags;
+}
+
+<style>
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 28px;
+    width: 80%;
+    border-radius: 2px;
+    background-color: #1a1a1a;
+    font-family: "Montserrat";
+}
+
+.header {
+    width: 100%;
+    background-color: #1d1d1d;
+    display: flex;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 5px 5px -5px rgb(0 0 0 / 40%);
+}
+
+.header h3 {
+    margin: 13px 0;
+}
+
+.tags-container {
+    display: flexbox;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #272727;
+    border-radius: 2px;
+    margin: 100px 0;
+    width: 55%;
+}
+
+.tag-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 17px;
+    border-bottom: solid 1px #111;
+}
+
+p {
+    margin: 0;
+}
+
+.icon-with-data {
+    display: flex;
+    align-items: center;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 16;
+    user-select: none;
+}
+
+.username {
+    font-size: 0.8rem;
+    color: #08A6F6;
+}
+
+.icon-with-data * {
+    margin-right: 6px;
+}
+
+.tag-link {
+    font-size: 1.3rem;
+    color: #9f9;
+    margin-right: 15px;
+}
+
+.col {
+    display: flex;
+    margin-left: 15px;
+}
+
+.col-2 {
+    display: flex;
+    width: 40%;
+    justify-content: flex-start;
+}
+
+.col-2 * {
+    margin-right: 10px;
+}
+</style>
+
+<div class="content-container">
+    <div class="header">
+        <h3>Tags</h3>
+    </div>
+
+    <div class="tags-container">
+        @foreach (var tag in tags) {
+            <div class="tag-info">
+                <div class="col">
+                    <div class="icon-with-data">
+                        <a class="tag-link" href="tag/@tag.TagId">@tag.Name</a>
+                        <span class="material-symbols-outlined">person</span>
+                        <a href="user/@tag.User.UserName" class="username">@tag.User.UserName</a>
+                    </div>
+                </div>
+
+                <div class="col-2">
+                    <div class="icon-with-data">
+                        <span class="material-symbols-outlined">photo_library</span>
+                        <p>@tag.PostTags.Count()</p>
+                    </div>
+                    <div class="icon-with-data">
+                        <span class="material-symbols-outlined">schedule</span>
+                        <p>@tag.AdditionDate.ToShortDateString()</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
